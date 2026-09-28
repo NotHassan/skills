@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "implement-and-prove",
+  "version": "0.2.0",
+  "description": "Implement changes with reproducible verification, visual evidence, and draft pull requests.",
+  "author": {"name": "Hassan"},
+  "repository": "https://github.com/NotHassan/skills",
+  "license": "MIT",
+  "keywords": ["verification", "code-review", "playwright", "evidence", "pull-request"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Implement and Prove",
+        "shortDescription": "Implement, verify, record evidence, and open a draft PR",
+        "developerName": "Hassan",
+        "category": "Coding"
+      }
+    }
+  }
+}

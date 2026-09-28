@@ -1,0 +1,14 @@
+{
+  "name": "hassan-skills",
+  "private": true,
+  "description": "Development tooling for a repository of portable Agent Skills packaged as Claude Code and Codex plugins.",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.mjs\"",
+    "validate": "node scripts/validate.mjs",
+    "install-skill": "node scripts/install.mjs",
+    "test:browser": "node tests/implement-and-prove/browser/smoke.mjs"
+  }
+}

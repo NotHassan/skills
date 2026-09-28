@@ -1,0 +1,12 @@
+{
+  "name": "hassan-skills",
+  "description": "Hassan's agent skills for Claude Code and Codex.",
+  "owner": {"name": "Hassan"},
+  "plugins": [
+    {
+      "name": "implement-and-prove",
+      "source": "./plugins/implement-and-prove",
+      "description": "Implementation, verification, review evidence, and draft PR publishing."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "type": "bugfix",
+  "task": "Fix stale workflow name in the sidebar",
+  "criteria": [
+    {"id": "sidebar-updates", "description": "The sidebar updates after saving without a reload.", "method": "scenario"},
+    {"id": "rename-persists", "description": "The saved name remains after reloading.", "method": "scenario"}
+  ],
+  "scenarios": [
+    {
+      "id": "rename-workflow",
+      "title": "Rename and verify persistence",
+      "file": "scenarios/rename.mjs",
+      "supportFiles": [],
+      "comparison": "same-scenario",
+      "criteria": ["sidebar-updates", "rename-persists"],
+      "expectedBeforeFailures": ["sidebar-updates"],
+      "evidence": {"format": "side-by-side", "checkpoints": ["saved", "reloaded"], "reason": "Shows the reported bug and its persistence check."}
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "implement-and-prove",
+  "version": "0.2.0",
+  "description": "Implement changes with reproducible verification, visual evidence, and draft pull requests.",
+  "author": {"name": "Hassan"},
+  "repository": "https://github.com/NotHassan/skills",
+  "license": "MIT",
+  "keywords": ["verification", "code-review", "playwright", "evidence", "pull-request"]
+}

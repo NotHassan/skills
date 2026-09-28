@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "viewport": {"width": 1280, "height": 720},
+  "locale": "en-US",
+  "timezoneId": "UTC",
+  "actionTimeoutMs": 10000,
+  "finalHoldMs": 1200,
+  "checks": [],
+  "reset": null,
+  "runtimeIgnore": []
+}

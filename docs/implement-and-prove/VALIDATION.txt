@@ -1,0 +1,22 @@
+Initial validation — September 26, 2026
+
+> implement-and-prove@0.1.0 validate
+> node scripts/validate.mjs
+
+Validated skill metadata, plugin/marketplace manifests, Codex policy, references, self-contained imports, JSON, and 22 JavaScript files.
+This local structural validator does not replace a live Claude Code/Codex installation test.
+
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2479.040714
+
+Additional check: SKILL.md and agents/openai.yaml parsed successfully with a full YAML parser.
+
+Browser smoke: BLOCKED by ERR_BLOCKED_BY_ADMINISTRATOR; no successful end-to-end browser run claimed.
+GitHub transport: MOCKED; live repository creation, PR creation, and uploads not executed.
+Native Claude Code and Codex loading: NOT EXECUTED.
