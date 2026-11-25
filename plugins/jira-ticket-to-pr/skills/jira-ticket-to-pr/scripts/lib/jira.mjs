@@ -162,6 +162,7 @@ export function restClient({ host, email, token, fetchImpl = globalThis.fetch, s
     assign: (key, accountId) => call('PUT', `/issue/${encodeURIComponent(key)}/assignee`, { accountId }),
     activeSprints: boardId => call('GET', `/board/${Number(boardId)}/sprint?state=active`, undefined, AGILE),
     addToSprint: (sprintId, key) => call('POST', `/sprint/${Number(sprintId)}/issue`, { issues: [key] }, AGILE),
+    search: async (jql, fields, maxResults = 50) => (await call('POST', '/search/jql', { jql, fields, maxResults })).issues ?? [],
     children: async key => (await call('POST', '/search/jql', { jql: `parent = ${key} AND statusCategory != Done ORDER BY rank`, fields: FIELDS.split(','), maxResults: 100 })).issues ?? []
   };
 }

@@ -12,13 +12,17 @@ import { PHASES, amendReviewRound, checkpointInstruction, extendReview, indexPat
 import { NEEDS, evaluate, passed } from './lib/gates.mjs';
 import { attachWalkthrough, checks, findPR, overlap, replyToThread, requestReview, reviewRun, threads, viewPR } from './lib/pr.mjs';
 import { doctor } from './lib/doctor.mjs';
+import { ghLogin, issuesFrom, myRecentPRs, sprintFieldId, suggest } from './lib/suggest.mjs';
 import { allowPath, isManagedObject, managedInfo, recordReport, reportMessage, setLane, teamCheck } from './lib/team.mjs';
 import { smokeJira } from './lib/smoke.mjs';
 
+const SUGGEST_JQL = 'assignee = currentUser() ORDER BY updated DESC';
 const help = `jtp — jira-ticket-to-pr helpers (Node 20+). All output is JSON.
 
 Setup
   doctor [--project PATH]                 tools, plugins, Jira access, config
+  setup suggest [--issues FILE] [--prs FILE]   tailored answers for setup, from your recent tickets and PRs (read-only)
+  setup sprint-field --file ISSUE.json    this site's Sprint field id, from one ticket that is in a sprint
   config path | show | validate | get DOTTED.KEY
   config set --json '{"checkpoints":{"plan":"ask"}}'   merge into the user config
   checkpoint NAME                         mode + exact instruction for a checkpoint
@@ -147,6 +151,21 @@ try {
   if (!command || command === 'help' || args.help) { console.log(help); process.exit(0); }
   switch (command) {
     case 'doctor': out(await doctor({ project: args.project || '.' })); break;
+    case 'setup': {
+      if (sub === 'sprint-field') { const field = sprintFieldId(issuesFrom(readJSON(path.resolve(args.file ?? invariant(false, '--file is required.'))))); out({ field }); if (!field) process.exitCode = 2; break; }
+      invariant(sub === 'suggest', 'Usage: jtp setup suggest [--issues FILE] [--prs FILE] | jtp setup sprint-field --file ISSUE.json');
+      const { config } = loadConfig({ repo: (() => { try { return project(); } catch { return null; } })() });
+      const notes = [];
+      let issues = [];
+      if (args.issues) issues = issuesFrom(readJSON(path.resolve(args.issues)));
+      else if (accessMode(config).mode === 'rest') issues = await clientFromEnv(config).search(SUGGEST_JQL, ['*all'], 30);
+      else notes.push(`No Jira data: save a searchJiraIssuesUsingJql result for jql "${SUGGEST_JQL}" (view "evidence", maxResults 30) and pass --issues.`);
+      let prs = [];
+      if (args.prs) prs = readJSON(path.resolve(args.prs));
+      else { const fetched = myRecentPRs(); prs = fetched.prs; if (fetched.error) notes.push(`No GitHub data: ${fetched.error}`); }
+      out({ ...suggest({ issues, prs, login: ghLogin(), reviewLabel: config.review.label }), jql: SUGGEST_JQL, notes });
+      break;
+    }
     case 'config': {
       const loaded = loadConfig({ repo: (() => { try { return project(); } catch { return null; } })() });
       if (sub === 'path') out({ user: userConfigPath(), configured: loaded.configured, sources: loaded.sources });
