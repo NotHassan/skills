@@ -18,15 +18,15 @@ test('every skill installs into both hosts as a self-contained copy', t => {
     assert.ok(target.endsWith(path.join('skills', skill)));
     assert.ok(fs.existsSync(path.join(target, 'SKILL.md')));
   }
-  // The installed implement-and-prove CLI runs with the source repository out of reach.
-  const cli = path.join(root, '.agents/skills/implement-and-prove/scripts/proof.mjs');
-  assert.match(spawnSync(process.execPath, [cli, 'help'], { cwd: root, encoding: 'utf8' }).stdout, /Implement and Prove/);
+  // The installed jtp CLI runs with the source repository out of reach.
+  const cli = path.join(root, '.agents/skills/jira-ticket-to-pr/scripts/jtp.mjs');
+  assert.match(spawnSync(process.execPath, [cli, 'help'], { cwd: root, encoding: 'utf8' }).stdout, /run start/);
 });
 test('a single named skill installs into a single host', t => {
   const root = home(t);
-  const [result, ...rest] = install({ skill: 'implement-and-prove', agent: 'claude', scope: 'user', home: root });
+  const [result, ...rest] = install({ skill: 'jira-ticket-to-pr', agent: 'claude', scope: 'user', home: root });
   assert.equal(rest.length, 0);
-  assert.equal(result.target, path.join(root, '.claude/skills/implement-and-prove'));
+  assert.equal(result.target, path.join(root, '.claude/skills/jira-ticket-to-pr'));
 });
 test('the skill must be named explicitly', t => {
   const root = home(t);
@@ -35,10 +35,10 @@ test('the skill must be named explicitly', t => {
 });
 test('install refuses overwrites; explicit replacement preserves old directory', t => {
   const root = home(t);
-  const [first] = install({ skill: 'implement-and-prove', agent: 'codex', scope: 'user', home: root });
+  const [first] = install({ skill: 'jira-ticket-to-pr', agent: 'codex', scope: 'user', home: root });
   fs.writeFileSync(path.join(first.target, 'user-note.txt'), 'keep');
-  assert.throws(() => install({ skill: 'implement-and-prove', agent: 'codex', scope: 'user', home: root }), /Already installed/);
-  const [second] = install({ skill: 'implement-and-prove', agent: 'codex', scope: 'user', home: root, replace: true });
+  assert.throws(() => install({ skill: 'jira-ticket-to-pr', agent: 'codex', scope: 'user', home: root }), /Already installed/);
+  const [second] = install({ skill: 'jira-ticket-to-pr', agent: 'codex', scope: 'user', home: root, replace: true });
   assert.equal(fs.readFileSync(path.join(second.backup, 'user-note.txt'), 'utf8'), 'keep');
   assert.ok(!second.backup.includes(`${path.sep}skills${path.sep}`));
 });

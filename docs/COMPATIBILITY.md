@@ -10,24 +10,18 @@
 
 ## Verified
 
-As of 2026-09-28, with Claude Code 2.1.220:
-
-- `claude plugin validate .` and `claude plugin validate plugins/implement-and-prove --strict` passed.
-- In an isolated `CLAUDE_CONFIG_DIR`, `claude plugin marketplace add <local clone>` followed by
-  `claude plugin install implement-and-prove@hassan-skills` succeeded, and `claude plugin details`
-  listed one skill, `implement-and-prove`, at version 0.1.0.
-- The same install from the GitHub remote succeeded in a fresh isolated `CLAUDE_CONFIG_DIR`:
-  `claude plugin marketplace add NotHassan/skills`, then
-  `claude plugin install implement-and-prove@hassan-skills`, installed version 0.1.0 with its one skill.
-- The direct installer is covered by `tests/repo/install.test.mjs`, which runs an installed CLI
-  outside the source repository.
+The packaging checks (`npm run validate`, `claude plugin validate`) run on every change. The
+`implement-and-prove` install checks from 2026-09-28 were not repeated for `jira-ticket-to-pr`.
+The direct installer is covered by `tests/repo/install.test.mjs`, which runs the installed `jtp` CLI
+outside the source repository.
 
 ## Not verified
 
 - Adding the Codex marketplace from the GitHub remote.
 - Any Codex route. No Codex CLI was available, so the Codex marketplace and `plugin.json` match the
   published format but have not been loaded by Codex.
-- Running a skill inside a live Claude Code or Codex session.
+- Installing `jira-ticket-to-pr` from the marketplace.
+- Any route other than Claude Code: the skill relies on Claude Code's session, PR and question tools.
 
 ## Format choices
 

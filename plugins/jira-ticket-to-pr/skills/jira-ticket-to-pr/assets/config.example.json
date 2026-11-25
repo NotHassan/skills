@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "jira": {
+    "site": "acme.atlassian.net",
+    "accountId": "557058:00000000-0000-0000-0000-000000000000",
+    "access": "auto",
+    "statuses": { "inProgress": "In Progress", "inReview": "In Review" },
+    "projects": { "OPS": { "inReview": "Code Review" } },
+    "assignOnClaim": true
+  },
+  "git": { "user": "jdoe", "branchTemplate": "{user}/{key}-{slug}", "base": null },
+  "checkpoints": {
+    "requirements": "ask-if-unclear",
+    "plan": "auto",
+    "reviewTriage": "auto",
+    "jiraAndReady": "auto"
+  },
+  "review": {
+    "mode": "label",
+    "label": "claude-review",
+    "labelColor": "cc785c",
+    "labelDescription": "Start a Claude review on the PR.",
+    "workflowPattern": "review",
+    "maxRounds": 3
+  },
+  "ci": { "maxFixAttempts": 3 },
+  "walkthrough": { "look": "blueprint", "voice": "local" },
+  "manager": { "maxParallel": 4 },
+  "conventions": ["Backend and frontend halves of a feature ship as paired PRs that link each other."]
+}
