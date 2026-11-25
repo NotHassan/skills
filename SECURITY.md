@@ -9,7 +9,7 @@ installers such as `npx skills` have their own behavior.
 
 Skill-specific data handling:
 
-- [implement-and-prove](plugins/implement-and-prove/SECURITY.md)
+- [jira-ticket-to-pr](plugins/jira-ticket-to-pr/SECURITY.md)
 
 To report a vulnerability or an exposed secret, use **Report a vulnerability** on the repository's
 Security tab (GitHub private vulnerability reporting) rather than opening a public issue.

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Jira Ticket to PR"
+  short_description: "Take Jira tickets to reviewed draft PRs with proof and a walkthrough"
+  default_prompt: "Use $jira-ticket-to-pr to take this ticket to a reviewed pull request with proof."
+policy:
+  allow_implicit_invocation: false

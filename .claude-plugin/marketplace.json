@@ -1,12 +1,14 @@
 {
   "name": "hassan-skills",
   "description": "Hassan's agent skills for Claude Code and Codex.",
-  "owner": {"name": "Hassan"},
+  "owner": {
+    "name": "Hassan"
+  },
   "plugins": [
     {
-      "name": "implement-and-prove",
-      "source": "./plugins/implement-and-prove",
-      "description": "Implementation, verification, review evidence, and draft PR publishing."
+      "name": "jira-ticket-to-pr",
+      "source": "./plugins/jira-ticket-to-pr",
+      "description": "Jira tickets to reviewed pull requests with proof and a walkthrough."
     }
   ]
 }

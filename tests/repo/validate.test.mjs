@@ -14,12 +14,12 @@ function copy(t) {
   return root;
 }
 const edit = (file, change) => fs.writeFileSync(file, change(fs.readFileSync(file, 'utf8')));
-const plugin = root => path.join(root, 'plugins/implement-and-prove');
+const plugin = root => path.join(root, 'plugins/jira-ticket-to-pr');
 
-test('the repository validates', () => assert.ok(validate().skills.includes('implement-and-prove')));
+test('the repository validates', () => assert.ok(validate().skills.includes('jira-ticket-to-pr')));
 test('manifest names must match the plugin directory', t => {
   const root = copy(t);
-  edit(path.join(plugin(root), '.claude-plugin/plugin.json'), s => s.replace('"name": "implement-and-prove"', '"name": "proof"'));
+  edit(path.join(plugin(root), '.claude-plugin/plugin.json'), s => s.replace('"name": "jira-ticket-to-pr"', '"name": "proof"'));
   assert.throws(() => validate(root), /manifest names must equal the directory name/);
 });
 test('manifest versions must agree', t => {
@@ -31,19 +31,19 @@ test('every plugin must be listed in both marketplaces', t => {
   const root = copy(t);
   fs.cpSync(plugin(root), path.join(root, 'plugins/second-plugin'), { recursive: true });
   assert.throws(() => validate(root), /manifest names must equal the directory name/);
-  for (const file of ['.claude-plugin/plugin.json', 'plugin.json']) edit(path.join(root, 'plugins/second-plugin', file), s => s.replace('"name": "implement-and-prove"', '"name": "second-plugin"'));
+  for (const file of ['.claude-plugin/plugin.json', 'plugin.json']) edit(path.join(root, 'plugins/second-plugin', file), s => s.replace('"name": "jira-ticket-to-pr"', '"name": "second-plugin"'));
   assert.throws(() => validate(root), /unique across plugins/);
-  fs.renameSync(path.join(root, 'plugins/second-plugin/skills/implement-and-prove'), path.join(root, 'plugins/second-plugin/skills/second-skill'));
-  edit(path.join(root, 'plugins/second-plugin/skills/second-skill/SKILL.md'), s => s.replace('name: implement-and-prove', 'name: second-skill'));
+  fs.renameSync(path.join(root, 'plugins/second-plugin/skills/jira-ticket-to-pr'), path.join(root, 'plugins/second-plugin/skills/second-skill'));
+  edit(path.join(root, 'plugins/second-plugin/skills/second-skill/SKILL.md'), s => s.replace('name: jira-ticket-to-pr', 'name: second-skill'));
   assert.throws(() => validate(root), /Claude marketplace must list exactly/);
 });
 test('skill runtime imports must stay inside the skill folder', t => {
   const root = copy(t);
-  edit(path.join(plugin(root), 'skills/implement-and-prove/scripts/proof.mjs'), s => `import '../../../../../scripts/lib.mjs';\n${s}`);
+  edit(path.join(plugin(root), 'skills/jira-ticket-to-pr/scripts/jtp.mjs'), s => `import '../../../../../scripts/lib.mjs';\n${s}`);
   assert.throws(() => validate(root), /escapes the skill folder/);
 });
 test('explicit-only invocation must also be declared for Codex', t => {
   const root = copy(t);
-  edit(path.join(plugin(root), 'skills/implement-and-prove/agents/openai.yaml'), s => s.replace('allow_implicit_invocation: false', 'allow_implicit_invocation: true'));
+  edit(path.join(plugin(root), 'skills/jira-ticket-to-pr/agents/openai.yaml'), s => s.replace('allow_implicit_invocation: false', 'allow_implicit_invocation: true'));
   assert.throws(() => validate(root), /allow_implicit_invocation: false/);
 });

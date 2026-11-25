@@ -1,0 +1,7 @@
+{
+  "name": "jtp-companion",
+  "version": "0.1.0",
+  "author": { "name": "jira-ticket-to-pr" },
+  "description": "Companion mod for the jira-ticket-to-pr skill: enforces its gates, vouches for checkpoint answers, shows a live run pane, and alerts when a run waits on you.",
+  "types": "./types/index.d.ts"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "jira-ticket-to-pr",
+  "version": "0.1.0",
+  "description": "Take Jira tickets end to end into reviewed pull requests with before/after proof, a live app check, and a walkthrough video.",
+  "author": {"name": "Hassan"},
+  "repository": "https://github.com/NotHassan/skills",
+  "license": "MIT",
+  "keywords": ["jira", "pull-request", "code-review", "evidence", "verification"]
+}
